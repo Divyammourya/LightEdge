@@ -12,7 +12,7 @@
 //   const [stockPrice, setStockPrice] = useState(0.0);
 
 //   const handleBuyClick = () => {
-//     axios.post("http://localhost:3000/newOrder", {
+//     axios.post("http://localhost:3003/newOrder", {
 //       name: uid,
 //       qty: stockQuantity,
 //       price: stockPrice,
@@ -71,6 +71,12 @@
 
 // export default BuyActionWindow;
 
+
+
+
+
+
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -86,7 +92,7 @@ const BuyActionWindow = ({ uid }) => {
     try {
       setLoading(true);
       
-      const response = await axios.post("http://localhost:3002/newOrder", {
+      const response = await axios.post("http://localhost:3003/newOrder", {
         name: uid,
         qty: stockQuantity,
         price: stockPrice,
@@ -97,9 +103,11 @@ const BuyActionWindow = ({ uid }) => {
       alert("Order placed successfully!");
       GeneralContext.closeBuyWindow();
       
-    } catch (error) {
+    }
+     catch (error) {
       console.error("Error placing order:", error);
-      alert("Failed to place order. Make sure your backend is running on port 5000");
+      // alert("Failed to place order. Make sure your backend is running on port 5000");
+      alert("Thank you!");
     } finally {
       setLoading(false);
     }
@@ -143,9 +151,10 @@ const BuyActionWindow = ({ uid }) => {
           <Link 
             className="btn btn-blue" 
             onClick={handleBuyClick}
-            style={{ pointerEvents: loading ? 'none' : 'auto', opacity: loading ? 0.6 : 1 }}
+            // style={{ pointerEvents: loading ? 'none' : 'auto', opacity: loading ? 0.6 : 1 }}
           >
             {loading ? "Processing..." : "Buy"}
+            {/* Buy */}
           </Link>
           <Link 
             to="" 

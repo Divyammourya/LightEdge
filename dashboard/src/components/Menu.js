@@ -19,11 +19,20 @@ const Menu = () => {
 
   return (
     <div className="menu-container">
-      <img src="logo.png" style={{ width: "50px" }} />
+
+
+       {/* <Link to="/">
+        <img src="logo6.png" style={{ width: "160px", marginTop:"30px" }} />
+      <img src="logo4(2).png" style={{ width:"20px" , marginLeft:"120%",marginBottom:"34px"}}/>
+        </Link> */}
+
+      <img src="logo6.png" style={{ width: "160px" }} />
+      <img src="logo4(2).png" style={{ width:"20px" , marginRight:"20%"}}/>
+
       <div className="menus">
         <ul>
           <li>
-            <Link
+            <Link  class="nav-item"
               style={{ textDecoration: "none" }}
               to="/"
               onClick={() => handleMenuClick(0)}
@@ -34,7 +43,7 @@ const Menu = () => {
             </Link>
           </li>
           <li>
-            <Link
+            <Link  class="nav-item"
               style={{ textDecoration: "none" }}
               to="/orders"
               onClick={() => handleMenuClick(1)}
@@ -45,7 +54,7 @@ const Menu = () => {
             </Link>
           </li>
           <li>
-            <Link
+            <Link  class="nav-item"
               style={{ textDecoration: "none" }}
               to="/holdings"
               onClick={() => handleMenuClick(2)}
@@ -56,7 +65,7 @@ const Menu = () => {
             </Link>
           </li>
           <li>
-            <Link
+            <Link  class="nav-item"
               style={{ textDecoration: "none" }}
               to="/positions"
               onClick={() => handleMenuClick(3)}
@@ -67,7 +76,7 @@ const Menu = () => {
             </Link>
           </li>
           <li>
-            <Link
+            <Link  class="nav-item"
               style={{ textDecoration: "none" }}
               to="funds"
               onClick={() => handleMenuClick(4)}
@@ -78,25 +87,23 @@ const Menu = () => {
             </Link>
           </li>
           <li>
-            <Link
+            <Link class="nav-item"
               style={{ textDecoration: "none" }}
               to="/apps"
-              onClick={() => handleMenuClick(6)}
+              onClick={() => handleMenuClick(5)}
             >
-              <p className={selectedMenu === 6 ? activeMenuClass : menuClass}>
+              <p className={selectedMenu === 5 ? activeMenuClass : menuClass}>
                 Apps
               </p>
             </Link>
           </li>
         </ul>
         <hr />
-        <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
-        </div>
+        
       </div>
     </div>
   );
 };
 
 export default Menu;
+

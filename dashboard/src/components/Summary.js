@@ -5,7 +5,9 @@ const Summary = () => {
     <>
       <div className="username">
         <h6>Hi, User!</h6>
-        <hr className="divider" />
+        <hr className="divide"
+        //  style={{backgroundColor:"rgb(0,0,67)",padding:"1px"}}
+         />
       </div>
 
       <div className="section">
@@ -29,7 +31,7 @@ const Summary = () => {
             </p>
           </div>
         </div>
-        <hr className="divider" />
+        <hr className="divide"/>
       </div>
 
       <div className="section">
@@ -55,7 +57,7 @@ const Summary = () => {
             </p>
           </div>
         </div>
-        <hr className="divider" />
+        <hr className="divide" />
       </div>
     </>
   );

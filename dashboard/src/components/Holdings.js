@@ -188,7 +188,11 @@ const Holdings = () => {
         // Try to fetch from backend with timeout
         const response = await axios.get("http://localhost:3003/allHoldings", {
           timeout: 5000,
-        });
+        })
+        // .then((res ) => {
+        //   console.log(res.data);
+        //   setAllHoldings(res.data);
+        // });  
 
         setAllHoldings(response.data);
       } catch (err) {

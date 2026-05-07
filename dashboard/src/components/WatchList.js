@@ -129,11 +129,63 @@ const WatchListItem = ({ stock }) => {
   );
 };
 
+// const WatchListActions = ({ uid }) => {
+//   const generalContext = useContext(GeneralContext);
+
+//   const handleBuyClick = () => {
+//     generalContext.openBuyWindow(uid);
+//   };
+
+//   return (
+//     <span className="actions">
+//       <span>
+//         <Tooltip
+//           title="Buy (B)"
+//           placement="top"
+//           arrow
+//           TransitionComponent={Grow}
+//           onClick={handleBuyClick}
+//         >
+//           <button className="buy">Buy</button>
+//         </Tooltip>
+//         <Tooltip
+//           title="Sell (S)"
+//           placement="top"
+//           arrow
+//           TransitionComponent={Grow}
+//         >
+//           <button className="sell">Sell</button>
+//         </Tooltip>
+//         <Tooltip
+//           title="Analytics (A)"
+//           placement="top"
+//           arrow
+//           TransitionComponent={Grow}
+//         >
+//           <button className="action">
+//             <BarChartOutlined className="icon" />
+//           </button>
+//         </Tooltip>
+//         <Tooltip title="More" placement="top" arrow TransitionComponent={Grow}>
+//           <button className="action">
+//             <MoreHoriz className="icon" />
+//           </button>
+//         </Tooltip>
+//       </span>
+//     </span>
+//   );
+// };
+
+
 const WatchListActions = ({ uid }) => {
   const generalContext = useContext(GeneralContext);
 
   const handleBuyClick = () => {
     generalContext.openBuyWindow(uid);
+  };
+
+  const handleSellClick = () => {
+    generalContext.openSellWindow(uid);   // ✅ this was missing
   };
 
   return (
@@ -153,6 +205,7 @@ const WatchListActions = ({ uid }) => {
           placement="top"
           arrow
           TransitionComponent={Grow}
+          onClick={handleSellClick}         // ✅ this was missing
         >
           <button className="sell">Sell</button>
         </Tooltip>
