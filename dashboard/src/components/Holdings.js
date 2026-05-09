@@ -1,243 +1,418 @@
-// import React, { useState, useEffect } from "react";
-// import axios, { all } from "axios";
+
+
+
+// import React, { useCallback, useEffect, useMemo, useState } from "react";
+// import axios from "axios";
 // import { VerticalGraph } from "./VerticalGraph";
 
-// // import { holdings } from "../data/data";
+// const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3003";
 
-// const Holdings = () => {
+// const freshAxiosConfig = () => ({
+//   params: { t: Date.now() },
+//   headers: {
+//     "Cache-Control": "no-cache",
+//     Pragma: "no-cache",
+//     Expires: "0",
+//   },
+// });
+
+// const Holdings = ({ refreshKey }) => {
 //   const [allHoldings, setAllHoldings] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [refreshing, setRefreshing] = useState(false);
+//   const [message, setMessage] = useState("");
+//   const [lastUpdated, setLastUpdated] = useState("");
 
-//   useEffect(() => {
-//     axios.get("http://localhost:3002/allHoldings").then((res) => {
-//       // console.log(res.data);
-//       setAllHoldings(res.data);
-//     });
+//   const fetchHoldings = useCallback(async () => {
+//     try {
+//       setRefreshing(true);
+
+//       const response = await axios.get(
+//         `${API_URL}/api/auth/holdings`,
+//         freshAxiosConfig()
+//       );
+
+//       const data = Array.isArray(response.data) ? response.data : [];
+//       setAllHoldings(data);
+
+//       const newestTime =
+//         data.find((stock) => stock.lastUpdated)?.lastUpdated ||
+//         new Date().toISOString();
+
+//       setLastUpdated(new Date(newestTime).toLocaleTimeString());
+
+//       const liveCount = data.filter((stock) => stock.isLive).length;
+
+//       if (data.length === 0) {
+//         setMessage("No holdings returned.");
+//       } else if (liveCount === 0) {
+//         setMessage("Showing fallback prices. Check FINNHUB_API_KEY or symbol support.");
+//       } else if (liveCount < data.length) {
+//         setMessage(`${liveCount}/${data.length} holding prices live from Finnhub.`);
+//       } else {
+//         setMessage("Live from Finnhub.");
+//       }
+//     } catch (error) {
+//       console.error("Holdings fetch error:", error);
+//       setMessage("Unable to connect to backend server.");
+//       setAllHoldings([]);
+//     } finally {
+//       setLoading(false);
+//       setRefreshing(false);
+//     }
 //   }, []);
 
-//   // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-//   const labels = allHoldings.map((subArray) => subArray["name"]);
+//   useEffect(() => {
+//     fetchHoldings();
 
-//   const data = {
-//     labels,
-//     datasets: [
-//       {
-//         label: "Stock Price",
-//         data: allHoldings.map((stock) => stock.price),
-//         backgroundColor: "rgba(255, 99, 132, 0.5)",
-//       },
-//     ],
+//     // const interval = setInterval(fetchHoldings, 30000);
+//     const interval = setInterval(fetchHoldings, 60000);
+
+
+//     const handleVisibilityChange = () => {
+//       if (!document.hidden) fetchHoldings();
+//     };
+
+//     window.addEventListener("focus", fetchHoldings);
+//     document.addEventListener("visibilitychange", handleVisibilityChange);
+
+//     return () => {
+//       clearInterval(interval);
+//       window.removeEventListener("focus", fetchHoldings);
+//       document.removeEventListener("visibilitychange", handleVisibilityChange);
+//     };
+//   }, [fetchHoldings]);
+
+//   useEffect(() => {
+//     if (refreshKey) fetchHoldings();
+//   }, [refreshKey, fetchHoldings]);
+
+//   const formatAmount = (value) => {
+//     return Number(value || 0).toLocaleString("en-IN", {
+//       minimumFractionDigits: 2,
+//       maximumFractionDigits: 2,
+//     });
 //   };
 
-//   // export const data = {
-//   //   labels,
-//   //   datasets: [
-//   // {
-//   //   label: 'Dataset 1',
-//   //   data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-//   //   backgroundColor: 'rgba(255, 99, 132, 0.5)',
-//   // },
-//   //     {
-//   //       label: 'Dataset 2',
-//   //       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-//   //       backgroundColor: 'rgba(53, 162, 235, 0.5)',
-//   //     },
-//   //   ],
-//   // };
+//   const getCurrency = (symbol) => {
+//     return ["INFY", "WIT", "HDB", "IBN"].includes(symbol) ? "$" : "₹";
+//   };
+
+//   const totals = useMemo(() => {
+//     const totalInvestment = allHoldings.reduce(
+//       (sum, stock) => sum + Number(stock.avg || 0) * Number(stock.qty || 0),
+//       0
+//     );
+
+//     const currentValue = allHoldings.reduce(
+//       (sum, stock) => sum + Number(stock.price || 0) * Number(stock.qty || 0),
+//       0
+//     );
+
+//     const totalPnL = currentValue - totalInvestment;
+//     const pnlPercent = totalInvestment
+//       ? ((totalPnL / totalInvestment) * 100).toFixed(2)
+//       : "0.00";
+
+//     return { totalInvestment, currentValue, totalPnL, pnlPercent };
+//   }, [allHoldings]);
+
+//   const chartData = useMemo(
+//     () => ({
+//       labels: allHoldings.map((stock) => stock.name),
+//       datasets: [
+//         {
+//           label: "Stock Price",
+//           data: allHoldings.map((stock) => Number(stock.price) || 0),
+//           backgroundColor: "rgba(56, 126, 209, 0.5)",
+//         },
+//       ],
+//     }),
+//     [allHoldings]
+//   );
+
+//   if (loading) {
+//     return <p style={{ padding: "24px" }}>Loading live holdings...</p>;
+//   }
 
 //   return (
 //     <>
-//       <h3 className="title">Holdings ({allHoldings.length})</h3>
+//       <div className="holdings-header">
+//         <div>
+//           <h3 className="title">Holdings ({allHoldings.length})</h3>
+//           <p>{refreshing ? "Refreshing..." : message}</p>
+//         </div>
+
+//         <div className="holdings-actions">
+//           {lastUpdated && <span>Updated: {lastUpdated}</span>}
+//           <button onClick={fetchHoldings} disabled={refreshing}>
+//             Refresh
+//           </button>
+//         </div>
+//       </div>
 
 //       <div className="order-table">
 //         <table>
-//           <tr>
-//             <th>Instrument</th>
-//             <th>Qty.</th>
-//             <th>Avg. cost</th>
-//             <th>LTP</th>
-//             <th>Cur. val</th>
-//             <th>P&L</th>
-//             <th>Net chg.</th>
-//             <th>Day chg.</th>
-//           </tr>
+//           <thead>
+//             <tr>
+//               <th>Instrument</th>
+//               <th>Qty.</th>
+//               <th>Avg. cost</th>
+//               <th>LTP</th>
+//               <th>Cur. val</th>
+//               <th>P&L</th>
+//               <th>Day chg.</th>
+//               <th>Product</th>
+//             </tr>
+//           </thead>
 
-//           {allHoldings.map((stock, index) => {
-//             const curValue = stock.price * stock.qty;
-//             const isProfit = curValue - stock.avg * stock.qty >= 0.0;
-//             const profClass = isProfit ? "profit" : "loss";
-//             const dayClass = stock.isLoss ? "loss" : "profit";
-
-//             return (
-//               <tr key={index}>
-//                 <td>{stock.product}</td>
-//                 <td>{stock.name}</td>
-//                 <td>{stock.qty}</td>
-//                 <td>{stock.avg.toFixed(2)}</td>
-//                 <td>{stock.price.toFixed(2)}</td>
-//                 {/* <td>{curValue.toFixed(2)}</td> */}
-//                 <td className={profClass}>
-//                   {(curValue - stock.avg * stock.qty).toFixed(2)}
+//           <tbody>
+//             {allHoldings.length === 0 ? (
+//               <tr>
+//                 <td colSpan="8" style={{ textAlign: "center", padding: "24px" }}>
+//                   No holdings found.
 //                 </td>
-//                 {/* <td className={profClass}>{stock.net}</td> */}
-//                 <td className={dayClass}>{stock.day}</td>
 //               </tr>
-//             );
-//           })}
+//             ) : (
+//               allHoldings.map((stock) => {
+//                 const currency = getCurrency(stock.symbol);
+//                 const qty = Number(stock.qty || 0);
+//                 const avg = Number(stock.avg || 0);
+//                 const price = Number(stock.price || 0);
+//                 const curValue = price * qty;
+//                 const pnl = curValue - avg * qty;
+//                 const isProfit = pnl >= 0;
+
+//                 return (
+//                   <tr key={`${stock.name}-${price}-${stock.lastUpdated || ""}`}>
+//                     <td>{stock.name}</td>
+//                     <td>{qty}</td>
+//                     <td>{currency}{formatAmount(avg)}</td>
+//                     <td>{currency}{formatAmount(price)}</td>
+//                     <td>{currency}{formatAmount(curValue)}</td>
+//                     <td className={isProfit ? "profit" : "loss"}>
+//                       {isProfit ? "+" : "-"}{currency}{formatAmount(Math.abs(pnl))}
+//                     </td>
+//                     <td className={stock.isLoss ? "loss" : "profit"}>{stock.day}</td>
+//                     <td>{stock.product}</td>
+//                   </tr>
+//                 );
+//               })
+//             )}
+//           </tbody>
 //         </table>
 //       </div>
 
-//       <div className="row">
+//       <div className="row" style={{ marginTop: "20px" }}>
 //         <div className="col">
-//           <h5>
-//             29,875.<span>55</span>{" "}
-//           </h5>
+//           <h5>₹{formatAmount(totals.totalInvestment)}</h5>
 //           <p>Total investment</p>
 //         </div>
+
 //         <div className="col">
-//           <h5>
-//             31,428.<span>95</span>{" "}
-//           </h5>
+//           <h5>₹{formatAmount(totals.currentValue)}</h5>
 //           <p>Current value</p>
 //         </div>
+
 //         <div className="col">
-//           <h5>1,553.40 (+5.20%)</h5>
+//           <h5 className={totals.totalPnL >= 0 ? "profit" : "loss"}>
+//             {totals.totalPnL >= 0 ? "+" : "-"}₹{formatAmount(Math.abs(totals.totalPnL))} (
+//             {totals.totalPnL >= 0 ? "+" : "-"}
+//             {Math.abs(Number(totals.pnlPercent)).toFixed(2)}%)
+//           </h5>
 //           <p>P&L</p>
 //         </div>
 //       </div>
-//       <VerticalGraph data={data} />
+
+//       {allHoldings.length > 0 && <VerticalGraph data={chartData} />}
+
+//       <style>{`
+//         .holdings-header {
+//           display: flex;
+//           justify-content: space-between;
+//           align-items: center;
+//           gap: 16px;
+//           margin-bottom: 18px;
+//         }
+
+//         .holdings-header p {
+//           margin: 4px 0 0;
+//           color: #777;
+//           font-size: 13px;
+//         }
+
+//         .holdings-actions {
+//           display: flex;
+//           align-items: center;
+//           gap: 12px;
+//           color: #777;
+//           font-size: 12px;
+//         }
+
+//         .holdings-actions button {
+//           border: none;
+//           background: #387ed1;
+//           color: #fff;
+//           padding: 9px 14px;
+//           border-radius: 8px;
+//           font-weight: 700;
+//           cursor: pointer;
+//         }
+
+//         .holdings-actions button:disabled {
+//           opacity: 0.65;
+//           cursor: not-allowed;
+//         }
+//       `}</style>
 //     </>
 //   );
 // };
- 
+
 // export default Holdings;
 
 
-import React, { useState, useEffect } from "react";
+
+
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { VerticalGraph } from "./VerticalGraph";
 
-const Holdings = () => {
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3003";
+
+const Holdings = ({ refreshKey }) => {
   const [allHoldings, setAllHoldings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [message, setMessage] = useState("");
+  const [lastUpdated, setLastUpdated] = useState("");
 
-  // Mock data - use this when backend is not available
-  const mockHoldingsData = [
-    {
-      product: "CNC",
-      name: "INFY",
-      qty: 2,
-      avg: 1200.5,
-      price: 1350.75,
-      day: "+5.2%",
-      isLoss: false,
-    },
-    {
-      product: "CNC",
-      name: "TCS",
-      qty: 1,
-      avg: 3500.0,
-      price: 3650.25,
-      day: "+3.8%",
-      isLoss: false,
-    },
-    {
-      product: "CNC",
-      name: "WIPRO",
-      qty: 5,
-      avg: 450.0,
-      price: 480.5,
-      day: "+2.1%",
-      isLoss: false,
-    },
-    {
-      product: "CNC",
-      name: "RELIANCE",
-      qty: 3,
-      avg: 2300.0,
-      price: 2250.0,
-      day: "-1.5%",
-      isLoss: true,
-    },
-    {
-      product: "CNC",
-      name: "HDFC",
-      qty: 4,
-      avg: 2800.0,
-      price: 2950.75,
-      day: "+4.2%",
-      isLoss: false,
-    },
-    {
-      product: "CNC",
-      name: "ICICI",
-      qty: 2,
-      avg: 950.0,
-      price: 1020.5,
-      day: "+6.3%",
-      isLoss: false,
-    },
-  ];
+  const fetchHoldings = useCallback(async () => {
+    try {
+      setRefreshing(true);
 
-  useEffect(() => {
-    const fetchHoldings = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+      const userId = localStorage.getItem("userId");
 
-        // Try to fetch from backend with timeout
-        const response = await axios.get("http://localhost:3003/allHoldings", {
-          timeout: 5000,
-        })
-        // .then((res ) => {
-        //   console.log(res.data);
-        //   setAllHoldings(res.data);
-        // });  
-
-        setAllHoldings(response.data);
-      } catch (err) {
-        console.log("Backend not available, using mock data:", err.message);
-        // If backend fails, use mock data
-        setAllHoldings(mockHoldingsData);
-        setError(null);
-      } finally {
-        setLoading(false);
+      if (!userId) {
+        setMessage("Please login to view holdings.");
+        setAllHoldings([]);
+        return;
       }
-    };
 
-    fetchHoldings();
+      const response = await axios.get(`${API_URL}/api/portfolio/holdings`, {
+        params: {
+          userId,
+          t: Date.now(),
+        },
+        headers: {
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      });
+
+      const data = Array.isArray(response.data) ? response.data : [];
+      setAllHoldings(data);
+      setLastUpdated(new Date().toLocaleTimeString());
+
+      if (data.length === 0) {
+        setMessage("No holdings found. Buy and execute an order first.");
+      } else {
+        setMessage("Showing your executed portfolio holdings.");
+      }
+    } catch (error) {
+      console.error("Holdings fetch error:", error);
+      setMessage(error.response?.data?.message || "Unable to connect to backend server.");
+      setAllHoldings([]);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
   }, []);
 
-  if (loading) {
-    return (
-      <div className="loading">
-        <h3>Loading holdings...</h3>
-      </div>
-    );
-  }
+  useEffect(() => {
+    fetchHoldings();
 
-  const labels = allHoldings.map((subArray) => subArray["name"]);
+    const interval = setInterval(fetchHoldings, 60000);
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Stock Price",
-        data: allHoldings.map((stock) => stock.price),
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
+    const handleVisibilityChange = () => {
+      if (!document.hidden) fetchHoldings();
+    };
+
+    window.addEventListener("focus", fetchHoldings);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("focus", fetchHoldings);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [fetchHoldings]);
+
+  useEffect(() => {
+    if (refreshKey) fetchHoldings();
+  }, [refreshKey, fetchHoldings]);
+
+  const formatAmount = (value) => {
+    return Number(value || 0).toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   };
+
+  const totals = useMemo(() => {
+    const totalInvestment = allHoldings.reduce(
+      (sum, stock) => sum + Number(stock.avg || 0) * Number(stock.qty || 0),
+      0
+    );
+
+    const currentValue = allHoldings.reduce(
+      (sum, stock) => sum + Number(stock.price || 0) * Number(stock.qty || 0),
+      0
+    );
+
+    const totalPnL = currentValue - totalInvestment;
+    const pnlPercent = totalInvestment
+      ? ((totalPnL / totalInvestment) * 100).toFixed(2)
+      : "0.00";
+
+    return { totalInvestment, currentValue, totalPnL, pnlPercent };
+  }, [allHoldings]);
+
+  const chartData = useMemo(
+    () => ({
+      labels: allHoldings.map((stock) => stock.name),
+      datasets: [
+        {
+          label: "Holding Value",
+          data: allHoldings.map(
+            (stock) => Number(stock.price || 0) * Number(stock.qty || 0)
+          ),
+          backgroundColor: "rgba(56, 126, 209, 0.5)",
+        },
+      ],
+    }),
+    [allHoldings]
+  );
+
+  if (loading) {
+    return <p style={{ padding: "24px" }}>Loading your holdings...</p>;
+  }
 
   return (
     <>
-      <h3 className="title">Holdings ({allHoldings.length})</h3>
-
-      {error && (
-        <div style={{ color: "red", padding: "10px", marginBottom: "10px" }}>
-          ⚠️ {error}
+      <div className="holdings-header">
+        <div>
+          <h3 className="title">Holdings ({allHoldings.length})</h3>
+          <p>{refreshing ? "Refreshing..." : message}</p>
         </div>
-      )}
+
+        <div className="holdings-actions">
+          {lastUpdated && <span>Updated: {lastUpdated}</span>}
+          <button onClick={fetchHoldings} disabled={refreshing}>
+            Refresh
+          </button>
+        </div>
+      </div>
 
       <div className="order-table">
         <table>
@@ -249,55 +424,110 @@ const Holdings = () => {
               <th>LTP</th>
               <th>Cur. val</th>
               <th>P&L</th>
-              <th>Net chg.</th>
               <th>Day chg.</th>
+              <th>Product</th>
             </tr>
           </thead>
-          <tbody>
-            {allHoldings.map((stock, index) => {
-              const curValue = stock.price * stock.qty;
-              const isProfit = curValue - stock.avg * stock.qty >= 0.0;
-              const profClass = isProfit ? "profit" : "loss";
-              const dayClass = stock.isLoss ? "loss" : "profit";
 
-              return (
-                <tr key={index}>
-                  <td>{stock.name}</td>
-                  <td>{stock.qty}</td>
-                  <td>{stock.avg.toFixed(2)}</td>
-                  <td>{stock.price.toFixed(2)}</td>
-                  <td>{curValue.toFixed(2)}</td>
-                  <td className={profClass}>
-                    {(curValue - stock.avg * stock.qty).toFixed(2)}
-                  </td>
-                  <td className={dayClass}>{stock.day}</td>
-                  <td>{stock.product}</td>
-                </tr>
-              );
-            })}
+          <tbody>
+            {allHoldings.length === 0 ? (
+              <tr>
+                <td colSpan="8" style={{ textAlign: "center", padding: "24px" }}>
+                  No holdings found.
+                </td>
+              </tr>
+            ) : (
+              allHoldings.map((stock) => {
+                const qty = Number(stock.qty || 0);
+                const avg = Number(stock.avg || 0);
+                const price = Number(stock.price || 0);
+                const curValue = price * qty;
+                const pnl = curValue - avg * qty;
+                const isProfit = pnl >= 0;
+
+                return (
+                  <tr key={`${stock._id || stock.name}-${qty}-${price}`}>
+                    <td>{stock.name}</td>
+                    <td>{qty}</td>
+                    <td>₹{formatAmount(avg)}</td>
+                    <td>₹{formatAmount(price)}</td>
+                    <td>₹{formatAmount(curValue)}</td>
+                    <td className={isProfit ? "profit" : "loss"}>
+                      {isProfit ? "+" : "-"}₹{formatAmount(Math.abs(pnl))}
+                    </td>
+                    <td className={stock.isLoss ? "loss" : "profit"}>
+                      {stock.day || "+0.00%"}
+                    </td>
+                    <td>{stock.product || "CNC"}</td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
 
-      <div className="row">
+      <div className="row" style={{ marginTop: "20px" }}>
         <div className="col">
-          <h5>
-            29,875.<span>55</span>
-          </h5>
+          <h5>₹{formatAmount(totals.totalInvestment)}</h5>
           <p>Total investment</p>
         </div>
+
         <div className="col">
-          <h5>
-            31,428.<span>95</span>
-          </h5>
+          <h5>₹{formatAmount(totals.currentValue)}</h5>
           <p>Current value</p>
         </div>
+
         <div className="col">
-          <h5>1,553.40 (+5.20%)</h5>
+          <h5 className={totals.totalPnL >= 0 ? "profit" : "loss"}>
+            {totals.totalPnL >= 0 ? "+" : "-"}₹{formatAmount(Math.abs(totals.totalPnL))} (
+            {totals.totalPnL >= 0 ? "+" : "-"}
+            {Math.abs(Number(totals.pnlPercent)).toFixed(2)}%)
+          </h5>
           <p>P&L</p>
         </div>
       </div>
-      <VerticalGraph data={data} />
+
+      {allHoldings.length > 0 && <VerticalGraph data={chartData} />}
+
+      <style>{`
+        .holdings-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 16px;
+          margin-bottom: 18px;
+        }
+
+        .holdings-header p {
+          margin: 4px 0 0;
+          color: #777;
+          font-size: 13px;
+        }
+
+        .holdings-actions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          color: #777;
+          font-size: 12px;
+        }
+
+        .holdings-actions button {
+          border: none;
+          background: #387ed1;
+          color: #fff;
+          padding: 9px 14px;
+          border-radius: 8px;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
+        .holdings-actions button:disabled {
+          opacity: 0.65;
+          cursor: not-allowed;
+        }
+      `}</style>
     </>
   );
 };

@@ -1,0 +1,43 @@
+*{
+    /* color: rgb(0,0,67); */
+    /* background-color: rgba(255, 255, 255, 0.514); */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+
+}
+.cards-card i:hover{
+    font-size: 28px;
+    /* box-shadow: 0 0 6px rgba(154, 70, 70, 0.5); */
+
+}
+
+/* .cards-card div:hover{
+    font-size: 28px;
+    box-shadow: 4px 6px 9px rgba(0,0,128);
+
+} */
+
+.cards-card:hover{
+    font-size: 28px;
+    box-shadow: 6px 6px 9px rgb(90, 90, 90);
+    transform: scale(1.1);
+    opacity: 2;
+    transition-duration: 0.8s;
+}
+
+.img:hover{
+    font-size: 28px;
+    /* box-shadow: 6px 6px 9px rgb(90, 90, 90); */
+    transform: scale(1.1);
+    opacity: 2;
+    transition-duration: 0.8s;
+
+}
+
+.heading{
+    /* color: rgb(0, 0, 67); */
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+}
+.btn{
+    background-color: rbg(0,0,67);
+}

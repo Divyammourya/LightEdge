@@ -1,0 +1,329 @@
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img,
+canvas {
+  max-width: 100%;
+}
+
+.order-table,
+.admin-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.order-table table,
+.admin-table table {
+  min-width: 760px;
+}
+
+@media (max-width: 1100px) {
+  .topbar-container {
+    height: auto;
+    display: block;
+  }
+
+  .indices-container {
+    width: 100%;
+    height: auto;
+    min-height: 48px;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .menu-container {
+    width: 100%;
+    flex-basis: 100%;
+    overflow-x: auto;
+    padding: 10px 14px;
+  }
+
+  .menus {
+    min-width: max-content;
+  }
+
+  .menus ul {
+    padding-left: 0;
+    white-space: nowrap;
+  }
+
+  .menus li {
+    margin-right: 22px;
+  }
+
+  .dashboard-container {
+    height: auto;
+    min-height: 100vh;
+    align-items: stretch;
+  }
+
+  .watchlist-container {
+    min-width: 300px;
+  }
+
+  .content {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-container {
+    display: block;
+  }
+
+  .watchlist-container {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    max-height: 420px;
+    overflow-y: auto;
+    box-shadow: none;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .content {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    padding: 18px 14px 36px;
+  }
+
+  .search {
+    height: auto;
+    padding: 14px 74px 14px 14px;
+    color: #333;
+  }
+
+  .list {
+    padding-left: 0;
+    padding-bottom: 0;
+  }
+
+  .item {
+    gap: 10px;
+  }
+
+  .itemInfo,
+  .item-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .list li::before {
+    display: none;
+  }
+
+  .actions {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+
+  .row {
+    display: block;
+    margin-top: 20px;
+  }
+
+  .col {
+    width: 100%;
+    flex-basis: 100%;
+    margin-bottom: 18px;
+  }
+
+  .data {
+    width: 100%;
+    gap: 18px;
+  }
+
+  .funds-action-bar,
+  .funds-layout,
+  .receipt-header,
+  .activity-item,
+  .admin-topbar {
+    display: block !important;
+  }
+
+  .funds-controls,
+  .receipt-actions,
+  .admin-actions {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .funds-controls input,
+  .funds-controls button,
+  .receipt-actions button,
+  .admin-actions button {
+    width: 100% !important;
+  }
+
+  .funds-layout,
+  .receipt-grid,
+  .admin-stats {
+    grid-template-columns: 1fr !important;
+  }
+
+  #buy-window,
+  #sell-window,
+  .container#buy-window,
+  .container#sell-window {
+    width: calc(100% - 28px) !important;
+    height: auto !important;
+    min-height: 220px;
+    left: 14px !important;
+    right: 14px !important;
+    bottom: 14px !important;
+  }
+
+  .inputs {
+    display: block;
+  }
+
+  .inputs fieldset {
+    width: 100%;
+    max-width: none;
+    margin-bottom: 12px;
+  }
+
+  .inputs fieldset input {
+    width: 100%;
+    max-width: none;
+  }
+
+  .buttons {
+    position: static;
+    display: block;
+    padding: 16px 20px;
+  }
+
+  .buttons span {
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .buttons div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 650px) {
+  .indices-container {
+    padding: 8px 10px;
+    justify-content: space-between;
+  }
+
+  .nifty,
+  .sensex {
+    flex-basis: 48%;
+    justify-content: flex-start;
+    gap: 5px;
+  }
+
+  .index,
+  .index-points,
+  .percent {
+    font-size: 0.7rem;
+  }
+
+  .menu-container {
+    display: block;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .profile {
+    margin: 10px 0 0;
+    justify-content: flex-start;
+  }
+
+  .content {
+    padding: 16px 10px 32px;
+  }
+
+  .watchlist-container {
+    max-height: 360px;
+  }
+
+  .username {
+    display: block !important;
+  }
+
+  .data {
+    display: block;
+  }
+
+  .data hr {
+    display: none;
+  }
+
+  .data .first,
+  .data .second {
+    margin-bottom: 18px;
+  }
+
+  .order-table th,
+  .order-table td {
+    padding: 10px 8px;
+    font-size: 0.78rem;
+  }
+
+  .order-actions {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .order-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .item {
+    display: block;
+  }
+
+  .itemInfo,
+  .item-info {
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  .actions span {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .actions span button {
+    width: auto;
+    min-width: 44px;
+    margin-right: 0;
+  }
+
+  .order-table table,
+  .admin-table table {
+    min-width: 680px;
+  }
+
+  .fund-summary-card h2 {
+    font-size: 1.8rem !important;
+  }
+}
