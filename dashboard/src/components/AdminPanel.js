@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 const API_URL = `${process.env.REACT_APP_API_URL || "http://localhost:3003"}/api/admin`;
@@ -12,7 +12,7 @@ const AdminPanel = () => {
   const userId = localStorage.getItem("userId");
   const userRole = localStorage.getItem("userRole");
 
-  const fetchAdminData = async () => {
+  const fetchAdminData = useCallback(async () => {
     try {
       setLoading(true);
       setMessage("");
@@ -30,13 +30,13 @@ const AdminPanel = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
     if (userId && userRole === "admin") {
       fetchAdminData();
     }
-  }, []);
+  }, [fetchAdminData, userId, userRole]);
 
   if (!userId || userRole !== "admin") {
     return (

@@ -775,7 +775,7 @@
 
 
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 
 const API_URL = `${process.env.REACT_APP_API_URL || "http://localhost:3003"}/api/funds`;
@@ -801,7 +801,7 @@ const Funds = () => {
     });
   };
 
-  const fetchFunds = async () => {
+  const fetchFunds = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -818,11 +818,11 @@ const Funds = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
     fetchFunds();
-  }, []);
+  }, [fetchFunds]);
 
   const validateAmount = () => {
     const value = Number(amount);
