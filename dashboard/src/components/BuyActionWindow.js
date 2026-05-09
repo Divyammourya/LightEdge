@@ -92,6 +92,8 @@ import axios from "axios";
 import GeneralContext from "./GeneralContext";
 import "./BuyActionWindow.css";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3003";
+
 const BuyActionWindow = ({ uid }) => {
   const generalContext = useContext(GeneralContext);
   const [stockQuantity, setStockQuantity] = useState(1);
@@ -109,7 +111,7 @@ const BuyActionWindow = ({ uid }) => {
 
       setLoading(true);
 
-      await axios.post("http://localhost:3003/newOrder", {
+      await axios.post(`${API_URL}/newOrder`, {
         userId,
         name: uid,
         qty: Number(stockQuantity),

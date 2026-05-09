@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const DASHBOARD_URL = "http://localhost:3001";
+const DASHBOARD_URL = process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
 
 const navStyles = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');

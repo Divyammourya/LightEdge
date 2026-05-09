@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:3003/api/admin";
+const API_URL = `${process.env.REACT_APP_API_URL || "http://localhost:3003"}/api/admin`;
 
 const AdminPanel = () => {
   const [data, setData] = useState(null);

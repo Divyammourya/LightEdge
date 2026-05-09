@@ -778,7 +778,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:3003/api/funds";
+const API_URL = `${process.env.REACT_APP_API_URL || "http://localhost:3003"}/api/funds`;
 
 const Funds = () => {
   const [funds, setFunds] = useState(null);
