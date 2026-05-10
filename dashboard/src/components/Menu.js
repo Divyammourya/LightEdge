@@ -607,7 +607,11 @@ const menuStyles = `
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    // font-size: 1rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1;
+
     flex-shrink: 0;
   }
 
@@ -745,7 +749,7 @@ const Menu = () => {
             {userName}
           </div>
 
-          <button
+          {/* <button
             type="button"
             className="dashboard-menu-toggle"
             onClick={() => setMobileOpen((open) => !open)}
@@ -753,7 +757,18 @@ const Menu = () => {
             aria-expanded={mobileOpen}
           >
             <i className={`fa ${mobileOpen ? "fa-times" : "fa-bars"}`} />
-          </button>
+          </button> */}
+
+          <button
+  type="button"
+  className="dashboard-menu-toggle"
+  onClick={() => setMobileOpen((open) => !open)}
+  aria-label="Toggle dashboard menu"
+  aria-expanded={mobileOpen}
+>
+  <span aria-hidden="true">{mobileOpen ? "x" : "☰"}</span>
+</button>
+
         </div>
       </div>
     </>
