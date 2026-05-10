@@ -98,18 +98,33 @@ const WatchList = ({ refreshKey }) => {
         {
           label: "Price",
           data: watchlist.map((stock) => Number(stock.price) || 0),
+          // backgroundColor: [
+          //   "rgba(255, 99, 132, 0.5)",
+          //   "rgba(54, 162, 235, 0.5)",
+          //   "rgba(255, 206, 86, 0.5)",
+          //   "rgba(75, 192, 192, 0.5)",
+          //   "rgba(153, 102, 255, 0.5)",
+          //   "rgba(255, 159, 64, 0.5)",
+          //   "rgba(35, 200, 120, 0.5)",
+          //   "rgba(80, 120, 255, 0.5)",
+          //   "rgba(255, 120, 80, 0.5)",
+          // ],
+          // borderWidth: 1,
           backgroundColor: [
-            "rgba(255, 99, 132, 0.5)",
-            "rgba(54, 162, 235, 0.5)",
-            "rgba(255, 206, 86, 0.5)",
-            "rgba(75, 192, 192, 0.5)",
-            "rgba(153, 102, 255, 0.5)",
-            "rgba(255, 159, 64, 0.5)",
-            "rgba(35, 200, 120, 0.5)",
-            "rgba(80, 120, 255, 0.5)",
-            "rgba(255, 120, 80, 0.5)",
-          ],
-          borderWidth: 1,
+  "#2563eb", // rich blue
+  "#06b6d4", // cyan
+  "#10b981", // emerald
+  "#f59e0b", // amber
+  "#ef4444", // red
+  "#8b5cf6", // violet
+  "#14b8a6", // teal
+  "#f97316", // orange
+  "#ec4899", // pink
+],
+borderColor: "#06172a",
+borderWidth: 2,
+hoverOffset: 8,
+
         },
       ],
     }),
