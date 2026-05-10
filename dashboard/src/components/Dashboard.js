@@ -1,6 +1,5 @@
 
 
-
 // import React, { useEffect, useState } from "react";
 // import { Link, Route, Routes } from "react-router-dom";
 
@@ -20,10 +19,7 @@
 
 //   useEffect(() => {
 //     const refresh = () => setRefreshKey(Date.now());
-
-//     // const interval = setInterval(refresh, 30000);
 //     const interval = setInterval(refresh, 60000);
-
 
 //     const handleVisibilityChange = () => {
 //       if (!document.hidden) refresh();
@@ -41,9 +37,11 @@
 
 //   return (
 //     <div className="dashboard-container">
-//       <GeneralContextProvider>
-//         <WatchList refreshKey={refreshKey} />
-//       </GeneralContextProvider>
+//       <div className="desktop-watchlist">
+//         <GeneralContextProvider>
+//           <WatchList refreshKey={refreshKey} />
+//         </GeneralContextProvider>
+//       </div>
 
 //       <div className="content">
 //         {userRole === "admin" && (
@@ -67,8 +65,18 @@
 //         )}
 
 //         <Routes>
-//           {/* <Route path="/" element={<Summary key={`summary-${refreshKey}`} />} /> */}
 //           <Route path="/" element={<Summary refreshKey={refreshKey} />} />
+
+//           <Route
+//             path="/watchlist"
+//             element={
+//               <div className="mobile-watchlist-page">
+//                 <GeneralContextProvider>
+//                   <WatchList refreshKey={refreshKey} />
+//                 </GeneralContextProvider>
+//               </div>
+//             }
+//           />
 
 //           <Route path="/orders" element={<Orders refreshKey={refreshKey} />} />
 //           <Route path="/holdings" element={<Holdings refreshKey={refreshKey} />} />
@@ -78,6 +86,42 @@
 //           <Route path="/admin" element={<AdminPanel />} />
 //         </Routes>
 //       </div>
+
+//       <style>{`
+//         .desktop-watchlist {
+//           flex-basis: 32%;
+//           height: 100%;
+//           min-width: 0;
+//         }
+
+//         .desktop-watchlist .watchlist-container {
+//           width: 100%;
+//           height: 100%;
+//           flex-basis: auto;
+//         }
+
+//         .mobile-watchlist-page {
+//           display: none;
+//         }
+
+//         @media (max-width: 900px) {
+//           .desktop-watchlist {
+//             display: none;
+//           }
+
+//           .mobile-watchlist-page {
+//             display: block;
+//           }
+
+//           .mobile-watchlist-page .watchlist-container {
+//             width: 100%;
+//             max-height: none;
+//             height: auto;
+//             box-shadow: none;
+//             border-bottom: none;
+//           }
+//         }
+//       `}</style>
 //     </div>
 //   );
 // };
