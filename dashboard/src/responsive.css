@@ -99,7 +99,8 @@ canvas {
   .search {
     height: auto;
     padding: 14px 74px 14px 14px;
-    color: #333;
+    /* color: #333; */
+    color: #eaf6ff;
   }
 
   .list {

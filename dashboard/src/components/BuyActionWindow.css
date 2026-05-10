@@ -229,6 +229,84 @@
     transition-duration: 0.8s;
     /* color: rgb(0,0,67); */
   }
-   /* p{
-    color: rgb(0,0,67);
-   } */
+  
+
+
+  /* new 10 may 2026 */
+  /* LIGHTEDGE dark buy/sell window theme - paste at bottom */
+
+.container {
+  background: #102a43 !important;
+  border: 1px solid #1f5a89 !important;
+  color: #eaf6ff !important;
+}
+
+.container .header {
+  background: #0b2545 !important;
+  border-bottom: 1px solid #1f5a89 !important;
+}
+
+.header h3,
+.market-options,
+.regular-order label,
+.buttons span {
+  color: #eaf6ff !important;
+}
+
+.tab {
+  background: #0b2545 !important;
+  border-bottom: 1px solid #1f5a89 !important;
+}
+
+.tab button,
+.options span {
+  color: #67e8f9 !important;
+}
+
+.tab button::after {
+  background-color: #67e8f9 !important;
+}
+
+.regular-order {
+  background: #102a43 !important;
+  color: #eaf6ff !important;
+}
+
+.inputs fieldset {
+  border: 1px solid #1f5a89 !important;
+  color: #9fb6cf !important;
+}
+
+.inputs fieldset legend {
+  color: #9fb6cf !important;
+}
+
+.inputs fieldset input {
+  background: #0b2545 !important;
+  color: #eaf6ff !important;
+}
+
+.inputs fieldset input:focus {
+  outline: none !important;
+}
+
+.btn-blue {
+  background: #12395c !important;
+  border: 1px solid #1f5a89 !important;
+  color: #eaf6ff !important;
+}
+
+.btn-blue:hover {
+  background: #1f5a89 !important;
+}
+
+.btn-grey {
+  background: #0b2545 !important;
+  border: 1px solid #1f5a89 !important;
+  color: #9fb6cf !important;
+}
+
+.btn-grey:hover {
+  background: #12395c !important;
+  color: #eaf6ff !important;
+}

@@ -853,3 +853,233 @@ hr {
 
 
 
+/* new 10 may 2026 */
+
+/* LIGHTEDGE dark dashboard theme - paste at bottom */
+
+:root {
+  --le-bg: #06172a;
+  --le-panel: #0b2545;
+  --le-card: #102a43;
+  --le-card-blue: #12395c;
+  --le-card-green: #0f5132;
+  --le-border-blue: #1f5a89;
+  --le-border-green: #116e4a;
+  --le-text: #eaf6ff;
+  --le-muted: #9fb6cf;
+  --le-cyan: #67e8f9;
+  --le-profit: #a7f3d0;
+  --le-loss: #ef4444;
+}
+
+body,
+#root {
+  background: var(--le-bg) !important;
+  color: var(--le-text) !important;
+}
+
+.topbar-container {
+  background: var(--le-panel) !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(31, 90, 137, 0.45) !important;
+}
+
+.indices-container,
+.menu-container {
+  background: var(--le-panel) !important;
+  border-color: rgba(31, 90, 137, 0.45) !important;
+}
+
+.dashboard-container,
+.content,
+.orders {
+  background: var(--le-bg) !important;
+  color: var(--le-text) !important;
+}
+
+.watchlist-container {
+  background: var(--le-panel) !important;
+  box-shadow: none !important;
+  border-right: 1px solid rgba(31, 90, 137, 0.45) !important;
+}
+
+.search {
+  background: var(--le-panel) !important;
+  color: var(--le-text) !important;
+  border-bottom: 1px solid rgba(31, 90, 137, 0.55) !important;
+}
+
+.search::placeholder {
+  color: var(--le-muted) !important;
+}
+
+.list li {
+  background: var(--le-panel) !important;
+  border-bottom: 1px solid rgba(31, 90, 137, 0.35) !important;
+}
+
+.list li:hover {
+  background: #12395c !important;
+}
+
+.item-info span:nth-child(1),
+.counts,
+.percent,
+.profile .username,
+.col p,
+.data .first p,
+.data .second p,
+.title,
+.username h6,
+.order-table th {
+  color: var(--le-muted) !important;
+}
+
+.menu {
+  color: var(--le-muted) !important;
+}
+
+.menu.selected,
+.menu:hover,
+.watchlist-number ul li:hover {
+  color: var(--le-cyan) !important;
+}
+
+.index,
+.item-info span {
+  color: var(--le-text) !important;
+}
+
+.index-points,
+.down,
+.item-info span:nth-child(2),
+.item-info span:nth-child(3) {
+  color: var(--le-loss) !important;
+}
+
+.up,
+.profit,
+.order-table td.profit,
+.row .col:last-child h5,
+.data .first h3,
+.data .first small,
+.data .first .profit {
+  color: var(--le-profit) !important;
+}
+
+.loss,
+.order-table td.loss {
+  color: var(--le-loss) !important;
+}
+
+.table,
+.order-table table,
+.admin-table,
+.fund-summary-card,
+.admin-topbar,
+.admin-login,
+.admin-table,
+.admin-stats div {
+  background: var(--le-card) !important;
+  border-color: var(--le-border-blue) !important;
+  color: var(--le-text) !important;
+  box-shadow: none !important;
+}
+
+.order-table tr,
+.order-table tr th:nth-child(1),
+.order-table tr th:nth-child(4),
+.order-table tr td:nth-child(1),
+.order-table tr td:nth-child(4) {
+  border-color: rgba(31, 90, 137, 0.45) !important;
+}
+
+.order-table td,
+.imp,
+.col h5,
+.section span p,
+.data .second p span {
+  color: var(--le-text) !important;
+}
+
+.btn,
+.btn-blue,
+.buy,
+.execute-btn {
+  background: var(--le-card-blue) !important;
+  border-color: var(--le-border-blue) !important;
+  color: var(--le-text) !important;
+}
+
+.btn-green,
+.cancel-btn {
+  background: var(--le-card-green) !important;
+  border-color: var(--le-border-green) !important;
+  color: var(--le-text) !important;
+}
+
+.sell {
+  background: #7f1d1d !important;
+  border-color: #ef4444 !important;
+  color: var(--le-text) !important;
+}
+
+.action {
+  background: var(--le-card) !important;
+  border-color: var(--le-border-blue) !important;
+}
+
+.icon,
+.section-icon,
+.settings {
+  color: var(--le-muted) !important;
+}
+
+.profile .avatar {
+  background: var(--le-card-blue) !important;
+  color: var(--le-cyan) !important;
+}
+
+hr,
+.divider,
+.data hr {
+  border-color: rgba(31, 90, 137, 0.45) !important;
+  background: rgba(31, 90, 137, 0.45) !important;
+}
+
+.watchlist-number {
+  background: var(--le-panel) !important;
+  border-color: rgba(31, 90, 137, 0.45) !important;
+}
+
+.watchlist-number ul li {
+  border-color: rgba(31, 90, 137, 0.45) !important;
+}
+
+.no-orders .icon,
+.no-orders p {
+  color: var(--le-muted) !important;
+}
+
+
+
+/* Funds page dark card text fix */
+.funds-page .funds-layout .fund-summary-card,
+.funds-page .funds-layout .fund-summary-card * {
+  color: #eaf6ff !important;
+}
+
+.funds-page .funds-layout .fund-summary-card p,
+.funds-page .funds-layout .fund-summary-card span,
+.funds-page .funds-layout .fund-summary-card small,
+.funds-page .funds-layout .fund-summary-card label {
+  color: #9fb6cf !important;
+}
+
+.funds-page .funds-layout .fund-summary-card h1,
+.funds-page .funds-layout .fund-summary-card h2,
+.funds-page .funds-layout .fund-summary-card h3,
+.funds-page .funds-layout .fund-summary-card strong,
+.funds-page .funds-layout .fund-summary-card b {
+  color: #eaf6ff !important;
+}
