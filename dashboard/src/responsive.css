@@ -327,3 +327,39 @@ canvas {
     font-size: 1.8rem !important;
   }
 }
+
+
+
+/* 10 may new code below */
+@media (max-width: 900px) {
+  .topbar-container {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+  }
+
+  .menu-container {
+    order: 1;
+    width: 100% !important;
+    flex-basis: auto !important;
+  }
+
+  .indices-container {
+    order: 2;
+    width: 100% !important;
+    flex-basis: auto !important;
+  }
+
+  .dashboard-container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .watchlist-container {
+    order: 1;
+  }
+
+  .content {
+    order: 2;
+  }
+}
