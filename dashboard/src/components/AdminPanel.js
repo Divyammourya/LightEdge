@@ -78,13 +78,13 @@ const AdminPanel = () => {
         {loading && <div className="admin-message">Loading admin data...</div>}
 
         <div className="admin-stats">
-          <div><span>Total Users</span><strong>{stats.totalUsers || 0}</strong></div>
-          <div><span>Total Orders</span><strong>{stats.totalOrders || 0}</strong></div>
-          <div><span>Total Funds</span><strong>₹{stats.totalFunds || "0.00"}</strong></div>
-          <div><span>Total Holdings</span><strong>{stats.totalHoldings || 0}</strong></div>
+          <div className="white"><span>Total Users</span><strong>{stats.totalUsers || 0}</strong></div>
+          <div className="white"><span>Total Orders</span><strong>{stats.totalOrders || 0}</strong></div>
+          <div className="white"><span>Total Funds</span><strong>₹{stats.totalFunds || "0.00"}</strong></div>
+          <div className="white"><span>Total Holdings</span><strong>{stats.totalHoldings || 0}</strong></div>
           <div><span>Pending</span><strong className="warning">{stats.pendingOrders || 0}</strong></div>
           <div><span>Executed</span><strong className="success">{stats.executedOrders || 0}</strong></div>
-          <div><span>Cancelled</span><strong>{stats.cancelledOrders || 0}</strong></div>
+          <div className="white"><span>Cancelled</span><strong>{stats.cancelledOrders || 0}</strong></div>
           <div><span>Rejected</span><strong className="danger">{stats.rejectedOrders || 0}</strong></div>
         </div>
 
@@ -312,7 +312,7 @@ const styles = `
 
   .admin-stats strong {
     font-size: 22px;
-    color: #202124;
+    // color: #202124;
   }
 
   .admin-stats .success { color: #1f9d55; }

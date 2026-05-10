@@ -1083,3 +1083,34 @@ hr,
 .funds-page .funds-layout .fund-summary-card b {
   color: #eaf6ff !important;
 }
+
+
+/* Admin panel button color fix */
+.admin-panel-link,
+a[href="/admin"] {
+  background: #ffffff !important;
+  color: #06172a !important;
+  border: 1px solid #1f5a89 !important;
+}
+
+.admin-panel-link:hover,
+a[href="/admin"]:hover {
+  background: #eaf6ff !important;
+  color: #06172a !important;
+}
+
+.admin-page .admin-topbar p,
+.admin-page .admin-stats span,
+.admin-page .admin-table td {
+  color: #eaf6ff !important;
+}
+/* Only fix black text inside admin panel */
+.admin-page h2,
+.admin-page h3,
+/* .admin-page strong, */
+.admin-page td,
+.admin-page.white strong,
+.admin-login h2,
+.admin-login p {
+  color: #eaf6ff !important;
+}
