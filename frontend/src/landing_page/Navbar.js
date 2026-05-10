@@ -39,6 +39,13 @@ const navStyles = `
     justify-content: space-between;
   }
 
+  .navbar-actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
   .navbar-logo {
     display: flex;
     align-items: center;
@@ -48,12 +55,12 @@ const navStyles = `
   }
 
   .navbar-logo img:first-child {
-    width: 90px;
+    width: 200px;
   }
 
-  .navbar-logo img:last-child {
-    width: 20px;
-  }
+  // .navbar-logo img:last-child {
+  //   width: 20px;
+  // }
 
   .navbar-links {
     display: flex;
@@ -192,11 +199,15 @@ const navStyles = `
   }
 
   .mobile-toggle {
-    display: none;
-    background: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
     border: 1.5px solid rgba(56, 126, 209, 0.25);
-    border-radius: 8px;
-    padding: 6px 10px;
+    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    padding: 0;
     cursor: pointer;
     color: #387ed1;
     font-size: 1rem;
@@ -211,9 +222,15 @@ const navStyles = `
     display: none;
     flex-direction: column;
     gap: 4px;
-    padding: 12px 24px 16px;
-    border-top: 1px solid rgba(56, 126, 209, 0.08);
-    background: rgba(255, 255, 255, 0.98);
+    position: absolute;
+    right: 0;
+    top: 46px;
+    min-width: 220px;
+    padding: 10px;
+    border: 1px solid rgba(56, 126, 209, 0.12);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.99);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
   }
 
   .mobile-menu.open {
@@ -258,11 +275,46 @@ const navStyles = `
 
   @media (max-width: 768px) {
     .navbar-links {
+      display: flex;
+      gap: 2px;
+    }
+
+    .navbar-inner {
+      height: 60px;
+      padding: 0 12px;
+      gap: 8px;
+    }
+
+    .navbar-logo img:first-child {
+      width: 126px;
+    }
+
+    .nav-link-item a {
+      width: 36px;
+      height: 36px;
+      justify-content: center;
+      padding: 0;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    .nav-label,
+    .nav-divider,
+    .user-pill,
+    .btn-signup {
       display: none;
     }
 
     .mobile-toggle {
-      display: block;
+      display: inline-flex;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      right: 12px;
+      left: 12px;
+      top: 68px;
+      min-width: 0;
     }
   }
 `;
@@ -335,32 +387,32 @@ function Navbar() {
       <nav className={`modern-navbar ${scrolled ? "scrolled" : ""}`}>
         <div className="navbar-inner">
           <Link className="navbar-logo" to="/">
-            <img src="media/myImages/logo5.png" alt="LightEdge" />
-            <img src="media/myImages/logo4(2).png" alt="LightEdge mark" />
+            <img src="media/myImages/logo11.png" alt="LightEdge" />
+            {/* <img src="media/myImages/logo4(2).png" alt="LightEdge mark" /> */}
           </Link>
 
           <ul className="navbar-links">
             <li className="nav-link-item">
               <Link to="/about">
-                <i className="fa fa-info-circle" /> About
+                <i className="fa fa-info-circle" /> <span className="nav-label">About</span>
               </Link>
             </li>
 
             <li className="nav-link-item">
               <Link to="/product">
-                <i className="fa fa-product-hunt" /> Product
+                <i className="fa fa-product-hunt" /> <span className="nav-label">Product</span>
               </Link>
             </li>
 
             <li className="nav-link-item">
               <Link to="/pricing">
-                <i className="fa fa-inr" /> Pricing
+                <i className="fa fa-inr" /> <span className="nav-label">Pricing</span>
               </Link>
             </li>
 
             <li className="nav-link-item">
               <Link to="/support">
-                <i className="fa fa-handshake-o" /> Support
+                <i className="fa fa-handshake-o" /> <span className="nav-label">Support</span>
               </Link>
             </li>
 
@@ -377,100 +429,75 @@ function Navbar() {
             ) : (
               <>
                 <li>
-                  <a href={dashboardUrl} className="btn-dashboard">
-                    <i className="fa fa-th-large" /> Dashboard
-                  </a>
-                </li>
-
-                <li>
                   <div className="user-pill">
                     <i className="fa fa-user-circle" />
                     {userName}
                     {isAdmin && <span className="role-pill">Admin</span>}
                   </div>
                 </li>
-
-                <li>
-                  <button className="btn-logout" onClick={handleLogout}>
-                    <i className="fa fa-sign-out" /> Logout
-                  </button>
-                </li>
               </>
             )}
           </ul>
 
-          <button
-            className="mobile-toggle"
-            onClick={() => setMobileOpen((open) => !open)}
-            aria-label="Toggle menu"
-          >
-            <i className={`fa fa-${mobileOpen ? "times" : "bars"}`} />
-          </button>
-        </div>
-
-        <div className={`mobile-menu ${mobileOpen ? "open" : ""}`}>
-          {isLoggedIn && (
-            <div className="mobile-user-row">
-              <i
-                className="fa fa-user-circle"
-                style={{ color: "#387ed1", fontSize: "1.1rem" }}
-              />
-              <span>
-                {userName}
-                {isAdmin && <span className="role-pill">Admin</span>}
-              </span>
-            </div>
-          )}
-
-          <Link to="/about" onClick={() => setMobileOpen(false)}>
-            <i className="fa fa-info-circle" /> About
-          </Link>
-
-          <Link to="/product" onClick={() => setMobileOpen(false)}>
-            <i className="fa fa-product-hunt" /> Product
-          </Link>
-
-          <Link to="/pricing" onClick={() => setMobileOpen(false)}>
-            <i className="fa fa-inr" /> Pricing
-          </Link>
-
-          <Link to="/support" onClick={() => setMobileOpen(false)}>
-            <i className="fa fa-handshake-o" /> Support
-          </Link>
-
-          {!isLoggedIn ? (
-            <Link
-              to="/signup"
-              onClick={() => setMobileOpen(false)}
-              style={{ color: "#387ed1", fontWeight: 600 }}
+          <div className="navbar-actions">
+            <button
+              className="mobile-toggle"
+              onClick={() => setMobileOpen((open) => !open)}
+              aria-label="Toggle account menu"
+              aria-expanded={mobileOpen}
             >
-              <i className="fa fa-sign-in" /> Signup
-            </Link>
-          ) : (
-            <>
-              <a href={dashboardUrl} onClick={() => setMobileOpen(false)}>
-                <i className="fa fa-th-large" /> Dashboard
-              </a>
+              <i className={`fa fa-${mobileOpen ? "times" : "bars"}`} />
+            </button>
 
-              <button
-                onClick={handleLogout}
-                style={{
-                  color: "#dc3545",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "10px 12px",
-                  borderRadius: "8px",
-                  fontWeight: 600,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                }}
-              >
-                <i className="fa fa-sign-out" /> Logout
-              </button>
-            </>
-          )}
+            <div className={`mobile-menu ${mobileOpen ? "open" : ""}`}>
+              {isLoggedIn && (
+                <div className="mobile-user-row">
+                  <i
+                    className="fa fa-user-circle"
+                    style={{ color: "#387ed1", fontSize: "1.1rem" }}
+                  />
+                  <span>
+                    {userName}
+                    {isAdmin && <span className="role-pill">Admin</span>}
+                  </span>
+                </div>
+              )}
+
+              {!isLoggedIn ? (
+                <Link
+                  to="/signup"
+                  onClick={() => setMobileOpen(false)}
+                  style={{ color: "#387ed1", fontWeight: 600 }}
+                >
+                  <i className="fa fa-sign-in" /> Signup
+                </Link>
+              ) : (
+                <>
+                  <a href={dashboardUrl} onClick={() => setMobileOpen(false)}>
+                    <i className="fa fa-th-large" /> Dashboard
+                  </a>
+
+                  <button
+                    onClick={handleLogout}
+                    style={{
+                      color: "#dc3545",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "10px 12px",
+                      borderRadius: "8px",
+                      fontWeight: 600,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <i className="fa fa-sign-out" /> Logout
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </nav>
     </>
