@@ -108,21 +108,57 @@ function Chatbot() {
       )}
 
       <style>{`
+        // .ai-chat-button {
+        //   position: fixed;
+        //   right: 22px;
+        //   bottom: 22px;
+        //   z-index: 2000;
+        //   width: 54px;
+        //   height: 54px;
+        //   border: none;
+        //   border-radius: 50%;
+        //   background: #387ed1;
+        //   color: #fff;
+        //   font-weight: 800;
+        //   cursor: pointer;
+        //   box-shadow: 0 10px 30px rgba(56, 126, 209, 0.35);
+        // }
+
         .ai-chat-button {
-          position: fixed;
-          right: 22px;
-          bottom: 22px;
-          z-index: 2000;
-          width: 54px;
-          height: 54px;
-          border: none;
-          border-radius: 50%;
-          background: #387ed1;
-          color: #fff;
-          font-weight: 800;
-          cursor: pointer;
-          box-shadow: 0 10px 30px rgba(56, 126, 209, 0.35);
-        }
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 2000;
+
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+  min-height: 58px;
+  max-width: 58px;
+  max-height: 58px;
+
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  box-sizing: border-box;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #387ed1;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(56, 126, 209, 0.35);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
 
         .ai-chat-panel {
           position: fixed;
