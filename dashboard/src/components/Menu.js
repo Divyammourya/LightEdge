@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -205,6 +203,12 @@ const menuStyles = `
     .mobile-watchlist-link {
       display: block !important;
     }
+      .menu-logo-area a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+  }
   }
 `;
 
@@ -237,16 +241,53 @@ const Menu = () => {
 
       <div className="menu-container">
         <div className="menus">
-          <div className="menu-logo-area">
+          {/* <div className="menu-logo-area">
             <img src="logo6.png" style={{ width: "130px" }} alt="Logo" />
             <img
               src="logo4(2).png"
               style={{ width: "16px", marginBottom: "2px" }}
               alt="Logo"
             />
-          </div>
+          </div> */}
 
-          <ul className={`dashboard-menu-list ${mobileOpen ? "mobile-menu-open" : ""}`}>
+          {/* <div className="menu-logo-area">
+            href={process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000"}
+            title="Go to Home" style=
+            {{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              textDecoration: "none",
+            }}
+            <a>
+              <img
+                src="logo6.png"
+                style={{ width: "130px", cursor: "pointer" }}
+                alt="Logo"
+              />
+              <img
+                src="logo4(2).png"
+                style={{
+                  width: "16px",
+                  marginBottom: "2px",
+                  cursor: "pointer",
+                }}
+                alt="Logo"
+              />
+            </a>
+          </div> */}
+
+          <div className="menu-logo-area">
+  <a href={process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000"} title="Go to Home">
+    <img src="logo6.png" style={{ width: "130px", cursor: "pointer" }} alt="Logo" />
+    <img src="logo4(2).png" style={{ width: "16px", marginBottom: "2px", cursor: "pointer" }} alt="Logo" />
+  </a>
+</div>
+
+
+          <ul
+            className={`dashboard-menu-list ${mobileOpen ? "mobile-menu-open" : ""}`}
+          >
             {menuItems.map((item) => (
               <li
                 key={item.path}
@@ -282,15 +323,14 @@ const Menu = () => {
           </button> */}
 
           <button
-  type="button"
-  className="dashboard-menu-toggle"
-  onClick={() => setMobileOpen((open) => !open)}
-  aria-label="Toggle dashboard menu"
-  aria-expanded={mobileOpen}
->
-  <span aria-hidden="true">{mobileOpen ? "x" : "☰"}</span>
-</button>
-
+            type="button"
+            className="dashboard-menu-toggle"
+            onClick={() => setMobileOpen((open) => !open)}
+            aria-label="Toggle dashboard menu"
+            aria-expanded={mobileOpen}
+          >
+            <span aria-hidden="true">{mobileOpen ? "x" : "☰"}</span>
+          </button>
         </div>
       </div>
     </>
