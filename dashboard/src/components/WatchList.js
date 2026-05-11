@@ -1,7 +1,12 @@
+import StockAnalyticsModal from "./StockAnalyticsModal";
 
-
-
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import axios from "axios";
 import GeneralContext from "./GeneralContext";
 import { Tooltip, Grow } from "@mui/material";
@@ -37,14 +42,15 @@ const WatchList = ({ refreshKey }) => {
 
       const response = await axios.get(
         `${API_URL}/api/auth/stocks`,
-        freshAxiosConfig()
+        freshAxiosConfig(),
       );
 
       const data = Array.isArray(response.data) ? response.data : [];
       setWatchlist(data);
 
       const newestTime =
-        data.find((stock) => stock.lastUpdated)?.lastUpdated || new Date().toISOString();
+        data.find((stock) => stock.lastUpdated)?.lastUpdated ||
+        new Date().toISOString();
 
       setLastUpdated(new Date(newestTime).toLocaleTimeString());
 
@@ -53,7 +59,9 @@ const WatchList = ({ refreshKey }) => {
       if (data.length === 0) {
         setMessage("No stock data returned.");
       } else if (liveCount === 0) {
-        setMessage("Showing fallback prices. Check FINNHUB_API_KEY or symbol support.");
+        setMessage(
+          "Showing fallback prices. Check FINNHUB_API_KEY or symbol support.",
+        );
       } else if (liveCount < data.length) {
         setMessage(`${liveCount}/${data.length} prices live from Finnhub.`);
       } else {
@@ -98,37 +106,25 @@ const WatchList = ({ refreshKey }) => {
         {
           label: "Price",
           data: watchlist.map((stock) => Number(stock.price) || 0),
-          // backgroundColor: [
-          //   "rgba(255, 99, 132, 0.5)",
-          //   "rgba(54, 162, 235, 0.5)",
-          //   "rgba(255, 206, 86, 0.5)",
-          //   "rgba(75, 192, 192, 0.5)",
-          //   "rgba(153, 102, 255, 0.5)",
-          //   "rgba(255, 159, 64, 0.5)",
-          //   "rgba(35, 200, 120, 0.5)",
-          //   "rgba(80, 120, 255, 0.5)",
-          //   "rgba(255, 120, 80, 0.5)",
-          // ],
-          // borderWidth: 1,
-          backgroundColor: [
-  "#2563eb", // rich blue
-  "#06b6d4", // cyan
-  "#10b981", // emerald
-  "#f59e0b", // amber
-  "#ef4444", // red
-  "#8b5cf6", // violet
-  "#14b8a6", // teal
-  "#f97316", // orange
-  "#ec4899", // pink
-],
-borderColor: "#06172a",
-borderWidth: 2,
-hoverOffset: 8,
 
+          backgroundColor: [
+            "#2563eb", // rich blue
+            "#06b6d4", // cyan
+            "#10b981", // emerald
+            "#f59e0b", // amber
+            "#ef4444", // red
+            "#8b5cf6", // violet
+            "#14b8a6", // teal
+            "#f97316", // orange
+            "#ec4899", // pink
+          ],
+          borderColor: "#06172a",
+          borderWidth: 2,
+          hoverOffset: 8,
         },
       ],
     }),
-    [watchlist]
+    [watchlist],
   );
 
   return (
@@ -156,7 +152,13 @@ hoverOffset: 8,
           gap: "8px",
         }}
       >
-        <span>{loading ? "Fetching prices..." : refreshing ? "Refreshing..." : message}</span>
+        <span>
+          {loading
+            ? "Fetching prices..."
+            : refreshing
+              ? "Refreshing..."
+              : message}
+        </span>
         {lastUpdated && <span>Updated: {lastUpdated}</span>}
 
         <button
@@ -177,7 +179,9 @@ hoverOffset: 8,
 
       <ul className="list">
         {loading ? (
-          <li style={{ padding: "14px", color: "#777" }}>Loading live prices...</li>
+          <li style={{ padding: "14px", color: "#777" }}>
+            Loading live prices...
+          </li>
         ) : (
           watchlist.map((stock) => (
             <WatchListItem
@@ -198,7 +202,13 @@ export default WatchList;
 const WatchListItem = ({ stock }) => {
   const [showWatchlistActions, setShowWatchlistActions] = useState(false);
 
-  const currency = stock.symbol === "INFY" || stock.symbol === "WIT" || stock.symbol === "HDB" || stock.symbol === "IBN" ? "$" : "₹";
+  const currency =
+    stock.symbol === "INFY" ||
+    stock.symbol === "WIT" ||
+    stock.symbol === "HDB" ||
+    stock.symbol === "IBN"
+      ? "$"
+      : "₹";
 
   return (
     <li
@@ -229,41 +239,108 @@ const WatchListItem = ({ stock }) => {
         </div>
       </div>
 
-      {showWatchlistActions && <WatchListActions uid={stock.name} />}
+      {/* {showWatchlistActions && <WatchListActions uid={stock.name} />} */}
+      {showWatchlistActions && <WatchListActions uid={stock.name} stock={stock} />}
     </li>
   );
 };
 
-const WatchListActions = ({ uid }) => {
+// const WatchListActions = ({ uid }) => {
+//   const generalContext = useContext(GeneralContext);
+
+//   return (
+//     <span className="actions">
+//       <span>
+//         <Tooltip
+//           title="Buy (B)"
+//           placement="top"
+//           arrow
+//           TransitionComponent={Grow}
+//         >
+//           <button
+//             className="buy"
+//             onClick={() => generalContext.openBuyWindow(uid)}
+//           >
+//             Buy
+//           </button>
+//         </Tooltip>
+
+//         <Tooltip
+//           title="Sell (S)"
+//           placement="top"
+//           arrow
+//           TransitionComponent={Grow}
+//         >
+//           <button
+//             className="sell"
+//             onClick={() => generalContext.openSellWindow(uid)}
+//           >
+//             Sell
+//           </button>
+//         </Tooltip>
+
+//         <Tooltip
+//           title="Analytics (A)"
+//           placement="top"
+//           arrow
+//           TransitionComponent={Grow}
+//         >
+//           <button className="action">
+//             <BarChartOutlined className="icon" />
+//           </button>
+//         </Tooltip>
+
+//         <Tooltip title="More" placement="top" arrow TransitionComponent={Grow}>
+//           <button className="action">
+//             <MoreHoriz className="icon" />
+//           </button>
+//         </Tooltip>
+//       </span>
+//     </span>
+//   );
+// };
+
+
+const WatchListActions = ({ uid, stock }) => {
   const generalContext = useContext(GeneralContext);
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
   return (
-    <span className="actions">
-      <span>
-        <Tooltip title="Buy (B)" placement="top" arrow TransitionComponent={Grow}>
-          <button className="buy" onClick={() => generalContext.openBuyWindow(uid)}>
-            Buy
-          </button>
-        </Tooltip>
+    <>
+      <span className="actions">
+        <span>
+          <Tooltip title="Buy (B)" placement="top" arrow TransitionComponent={Grow}>
+            <button className="buy" onClick={() => generalContext.openBuyWindow(uid)}>
+              Buy
+            </button>
+          </Tooltip>
 
-        <Tooltip title="Sell (S)" placement="top" arrow TransitionComponent={Grow}>
-          <button className="sell" onClick={() => generalContext.openSellWindow(uid)}>
-            Sell
-          </button>
-        </Tooltip>
+          <Tooltip title="Sell (S)" placement="top" arrow TransitionComponent={Grow}>
+            <button className="sell" onClick={() => generalContext.openSellWindow(uid)}>
+              Sell
+            </button>
+          </Tooltip>
 
-        <Tooltip title="Analytics (A)" placement="top" arrow TransitionComponent={Grow}>
-          <button className="action">
-            <BarChartOutlined className="icon" />
-          </button>
-        </Tooltip>
+          <Tooltip title="Analytics (A)" placement="top" arrow TransitionComponent={Grow}>
+            <button className="action" onClick={() => setShowAnalytics(true)}>
+              <BarChartOutlined className="icon" />
+            </button>
+          </Tooltip>
 
-        <Tooltip title="More" placement="top" arrow TransitionComponent={Grow}>
-          <button className="action">
-            <MoreHoriz className="icon" />
-          </button>
-        </Tooltip>
+          <Tooltip title="More" placement="top" arrow TransitionComponent={Grow}>
+            <button className="action">
+              <MoreHoriz className="icon" />
+            </button>
+          </Tooltip>
+        </span>
       </span>
-    </span>
+
+      {showAnalytics && (
+        <StockAnalyticsModal
+          stock={stock}
+          onClose={() => setShowAnalytics(false)}
+        />
+      )}
+    </>
   );
 };
