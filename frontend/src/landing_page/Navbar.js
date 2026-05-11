@@ -392,7 +392,7 @@ function Navbar() {
             {/* <img src="media/myImages/logo4(2).png" alt="LightEdge mark" /> */}
           </Link>
 
-          <ul className="navbar-links">
+          {/* <ul className="navbar-links">
             <li className="nav-link-item">
               <Link to="/about">
                 <i className="fa fa-info-circle" /> <span className="nav-label">About</span>
@@ -415,7 +415,38 @@ function Navbar() {
               <Link to="/support">
                 <i className="fa fa-handshake-o" /> <span className="nav-label">Support</span>
               </Link>
-            </li>
+            </li> */}
+
+            <ul className="navbar-links">
+  <li className="nav-link-item">
+    <Link to="/">
+      <i className="fa fa-home" /> <span className="nav-label">Home</span>
+    </Link>
+  </li>
+
+  <li className="nav-link-item">
+    <Link to="/about">
+      <i className="fa fa-info-circle" /> <span className="nav-label">About</span>
+    </Link>
+  </li>
+
+  <li className="nav-link-item">
+    <Link to="/product">
+      <i className="fa fa-product-hunt" /> <span className="nav-label">Product</span>
+    </Link>
+  </li>
+
+  <li className="nav-link-item">
+    <Link to="/pricing">
+      <i className="fa fa-inr" /> <span className="nav-label">Pricing</span>
+    </Link>
+  </li>
+
+  <li className="nav-link-item">
+    <Link to="/support">
+      <i className="fa fa-handshake-o" /> <span className="nav-label">Support</span>
+    </Link>
+  </li>
 
             <li>
               <div className="nav-divider" />
@@ -451,6 +482,11 @@ function Navbar() {
             </button>
 
             <div className={`mobile-menu ${mobileOpen ? "open" : ""}`}>
+
+              <Link to="/" onClick={() => setMobileOpen(false)}>
+  <i className="fa fa-home" /> Home
+</Link>
+
               {isLoggedIn && (
                 <div className="mobile-user-row">
                   <i
