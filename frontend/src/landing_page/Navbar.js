@@ -316,6 +316,7 @@ const navStyles = `
       top: 68px;
       min-width: 0;
     }
+
   }
 `;
 
@@ -500,6 +501,7 @@ function Navbar() {
           </div>
         </div>
       </nav>
+
     </>
   );
 }
