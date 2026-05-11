@@ -312,6 +312,8 @@
 
 
 import React, { useState } from "react";
+import './index.css'
+
 
 function TradingAccount() {
   const [activeTab, setActiveTab] = useState("signup");
@@ -476,6 +478,7 @@ function TradingAccount() {
                 display: "flex",
                 borderBottom: "2px solid #e0e0e0",
                 marginBottom: "24px",
+                // marginRight: "20px",
               }}
             >
               <button
