@@ -310,13 +310,15 @@ const WatchListActions = ({ uid, stock }) => {
       <span className="actions">
         <span>
           <Tooltip title="Buy (B)" placement="top" arrow TransitionComponent={Grow}>
-            <button className="buy" onClick={() => generalContext.openBuyWindow(uid)}>
+            {/* <button className="buy" onClick={() => generalContext.openBuyWindow(uid)}> */}
+            <button className="buy" onClick={() => generalContext.openBuyWindow(uid, stock?.price)}>
               Buy
             </button>
           </Tooltip>
 
           <Tooltip title="Sell (S)" placement="top" arrow TransitionComponent={Grow}>
-            <button className="sell" onClick={() => generalContext.openSellWindow(uid)}>
+            {/* <button className="sell" onClick={() => generalContext.openSellWindow(uid)}> */}
+            <button className="sell" onClick={() => generalContext.openSellWindow(uid, stock?.price)}>
               Sell
             </button>
           </Tooltip>
