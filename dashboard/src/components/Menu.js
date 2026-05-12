@@ -278,7 +278,8 @@ const Menu = () => {
           </div> */}
 
           <div className="menu-logo-area">
-  <a href={process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000"} title="Go to Home">
+  {/* <a href={process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000"} title="Go to Home"> */}
+  <a href={process.env.REACT_APP_FRONTEND_URL || "https://light-edge.vercel.app/"} title="Go to Home">
     <img src="logo6.png" style={{ width: "130px", cursor: "pointer" }} alt="Logo" />
     <img src="logo4(2).png" style={{ width: "16px", marginBottom: "2px", cursor: "pointer" }} alt="Logo" />
   </a>
